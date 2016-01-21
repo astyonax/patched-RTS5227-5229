@@ -37,6 +37,7 @@ Linux *** 4.4.0-040400-generic #201601101930 SMP Mon Jan 11 00:32:41 UTC 2016 x8
 ```
 
 **NOTA BENE**:
+
 1.  I know nothing of how drivers work, I simply tried to correct the few compilation errors.
 2. Although everything seems to work  fine in my machine, I do not guarantee that the changes I've done will not blow up your machine.
 
@@ -57,4 +58,5 @@ Some changes to the code are peculiar of ``Linux 4.4``, but many others were alr
 3. https://bbs.archlinux.org/viewtopic.php?id=124139
 
 Link to the Realtek driver page for RTS5229 (I have RTS5227 and it seems to work fine):
+
 4. http://www.realtek.com/Downloads/downloadsView.aspx?Langid=1&PNid=15&PFid=25&Level=4&Conn=3&DownTypeID=3&GetDown=false#2
