@@ -21,7 +21,7 @@ $dmesg
 ...
 ```
 Often, some SD cards do not work with the default driver (in my case ``rtsx_pci``).
-Not all cards trigger this error, but one of mine does (HAMA 16GB, class VI).
+Not all cards trigger this error, but one of mine does (HAMA SDHC 16GB, class 10).
 
 ## Patched driver
 
