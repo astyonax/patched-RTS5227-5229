@@ -48,7 +48,10 @@ Linux *** 4.4.0-040400-generic #201601101930 SMP Mon Jan 11 00:32:41 UTC 2016 x8
 3. Compile and install: ``$ make && sudo make install && sudo depmod -a``
 4. Try it. See link [2]
 5. Blacklist the default driver. In my case: 
-`` # echo 'rtsx_pci' >> /etc/modprobe.d/blacklist.conf``
+```
+# echo 'blacklist rtsx_pci' >> /etc/modprobe.d/blacklist.conf 
+# update-initramfs -u
+```
 
 ## Relevant websites
 Some changes to the code are peculiar of ``Linux 4.4``, but many others were already reported:
