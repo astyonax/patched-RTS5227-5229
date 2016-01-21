@@ -25,11 +25,11 @@ Not all cards trigger this error, but one of mine does (HAMA 16GB, class VI).
 
 ## Patched driver
 
-It is possible to download the drivers from the Realtek website, but it requires some
-changes to compile it in new kernels (here I have linux 4.4.0).
+Official drivers can be downloaded from the Realtek website, 
+but require some changes to compile in new kernels (here I have linux 4.4.0).
 
 As I do not think I can redistribure realtek code,
-here I added the patch to compile the driver in Ubuntu 15.10, with kernel:
+here I added the patch to compile the driver in Ubuntu 15.10, for kernel:
 
 ```
 $uname -a
@@ -43,10 +43,10 @@ Linux *** 4.4.0-040400-generic #201601101930 SMP Mon Jan 11 00:32:41 UTC 2016 x8
 ## Usage
 
 1. Download the driver source code from the Realtek website  (Google or see link [4])
-2. Unpack and apply the patch with ``$ patch -i patch_linux_4.4.0.diff``
+2. Unpack and apply the patch: ``$ patch -i patch_linux_4.4.0.diff``
 3. Compile and install: ``$ make && sudo make install && sudo depmod -a``
 4. Try it. See link [2]
-5. Blacklist the default driver. In my case
+5. Blacklist the default driver. In my case: 
 `` # echo 'rtsx_pci' >> /etc/modprobe.d/blacklist.conf``
 
 ## Relevant websites
