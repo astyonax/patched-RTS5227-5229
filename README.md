@@ -26,15 +26,17 @@ Not all cards trigger this error, but one of mine does (HAMA SDHC 16GB, class 10
 ## Patched driver
 
 Official drivers can be downloaded from the Realtek website, 
-but require some changes to compile in new kernels (here I have linux 4.4.0).
+but require some changes to compile in new kernels.
 
 As I do not think I can redistribure realtek code,
-here I added the patch to compile the driver in Ubuntu 15.10, for kernel:
+here I added the patch to compile the driver in Ubuntu 15.10.
 
-```
-$uname -a
-Linux *** 4.4.0-040400-generic #201601101930 SMP Mon Jan 11 00:32:41 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
-```
+I tested the  compilation on:
+
+* Linux 4.4.0
+* Linux 4.3.3
+
+
 
 **NOTA BENE**:
 
