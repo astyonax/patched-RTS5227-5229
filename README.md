@@ -28,8 +28,8 @@ Not all cards trigger this error, but one of mine does (HAMA SDHC 16GB, class 10
 Official drivers can be downloaded from the Realtek website, 
 but require some changes to compile in new kernels.
 
-As I do not think I can redistribure realtek code,
-here I added the patch to compile the driver in Ubuntu 15.10.
+As I do not think I can distribute the realtek code,
+here I added the patch to compile the driver in Ubuntu 15.10/16.04.
 
 I tested the  compilation on:
 
@@ -47,6 +47,17 @@ I tested the  compilation on:
 
 ## Usage
 
+### Sort of automatic
+
+0. Clone this repo 
+1. Cd in the repo folder
+2. Unpack the drivers you get from Realtek (link [4])
+3. Cd in the drivers folder
+4. Type bash run.sh, give root pw when asked
+
+### Manual
+
+0. Clone this repo & cd in the repo folder
 1. Download the driver source code from the Realtek website  (Google or see link [4])
 2. Unpack and apply the patch: ``$ patch -i patch_linux_4.4.0.diff``
 3. Compile and install: ``$ make && sudo make install && sudo depmod -a``
@@ -64,6 +75,6 @@ Some changes to the code are peculiar of ``Linux 4.4``, but many others were alr
 2. https://abhinavgupta2812.wordpress.com/2014/01/28/getting-a-realtek-sd-card-reader-to-work-on-linux-tried-and-tested-on-debian/
 3. https://bbs.archlinux.org/viewtopic.php?id=124139
 
-Link to the Realtek driver page for RTS5229 (I have RTS5227 and it seems to work fine):
+Link to the Realtek driver page for RTS5229 (I have RTS5227 but it seems to be working fine):
 
 4. http://www.realtek.com/Downloads/downloadsView.aspx?Langid=1&PNid=15&PFid=25&Level=4&Conn=3&DownTypeID=3&GetDown=false#2
