@@ -33,6 +33,7 @@ sudo depmod -a
 echo 'blacklist rtsx_pci' | sudo tee -a /etc/modprobe.d/blacklist.conf 
 sudo update-initramfs -u
 
+echo SUSPEND_MODULES="rts5227" | sudo tee -a /etc/pm/config.d/modules
 
 echo "Success"
 

@@ -55,6 +55,7 @@ I tested the  compilation on:
 3. Cd in the drivers folder
 4. Type bash run.sh, give root pw when asked
 
+
 ### Manual
 
 0. Clone this repo & cd in the repo folder
@@ -66,6 +67,10 @@ I tested the  compilation on:
 ```
 # echo 'blacklist rtsx_pci' >> /etc/modprobe.d/blacklist.conf 
 # update-initramfs -u
+```
+6. Unload the module before suspend
+```
+echo SUSPEND_MODULES="rts5227" | sudo tee -a /etc/pm/config.d/modules
 ```
 
 ## Relevant websites
