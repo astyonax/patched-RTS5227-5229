@@ -25,7 +25,7 @@ Not all cards trigger this error, but one of mine does (HAMA SDHC 16GB, class 10
 
 ## Patched driver
 
-Official drivers can be downloaded from the Realtek website, 
+Official drivers can be downloaded from the Realtek website,
 but require some changes to compile in new kernels.
 
 As I do not think I can distribute the realtek code,
@@ -33,6 +33,7 @@ here I added the patch to compile the driver in Ubuntu 15.10/16.04.
 
 I tested the  compilation on:
 
+* Linux 4.9.0
 * Linux 4.7.0
 * Linux 4.6.3
 * Linux 4.4.0
@@ -49,11 +50,11 @@ I tested the  compilation on:
 
 ### Sort of automatic
 
-0. Clone this repo 
+0. Clone this repo
 1. Cd in the repo folder
 2. Unpack the drivers you get from Realtek (link [4])
 3. Cd in the drivers folder
-4. Type bash run.sh, give root pw when asked
+4. Type ``$bash ../run.sh``, give root pw when asked
 
 
 ### Manual
@@ -63,9 +64,9 @@ I tested the  compilation on:
 2. Unpack and apply the patch: ``$ patch -i patch_linux_4.4.0.diff``
 3. Compile and install: ``$ make && sudo make install && sudo depmod -a``
 4. Try it. See link [2]
-5. Blacklist the default driver. In my case: 
+5. Blacklist the default driver. In my case:
 ```
-# echo 'blacklist rtsx_pci' >> /etc/modprobe.d/blacklist.conf 
+# echo 'blacklist rtsx_pci' >> /etc/modprobe.d/blacklist.conf
 # update-initramfs -u
 ```
 6. Unload the module before suspend
