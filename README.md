@@ -33,6 +33,7 @@ here I added the patch to compile the driver in Ubuntu 15.10/16.04.
 
 I tested the  compilation on:
 
+* Linux 4.10.2
 * Linux 4.9.0
 * Linux 4.7.0
 * Linux 4.6.3
