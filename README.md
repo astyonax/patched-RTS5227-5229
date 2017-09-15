@@ -31,8 +31,9 @@ but require some changes to compile in new kernels.
 As I do not think I can distribute the realtek code,
 here I added the patch to compile the driver in Ubuntu 15.10/16.04.
 
-I tested the  compilation on:
+I tested the compilation on:
 
+* Linux 4.12.0 
 * Linux 4.10.2
 * Linux 4.9.0
 * Linux 4.7.0
