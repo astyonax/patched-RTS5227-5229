@@ -51,21 +51,10 @@ I tested the compilation on:
 
 ## Usage
 
-### Sort of automatic
-
-0. Clone this repo
-1. Cd in the repo folder
-2. Unpack the drivers you get from Realtek (link [4])
-3. Cd in the drivers folder
-4. Type ``$bash ../run.sh``, give root pw when asked
-
-
 ### Manual
 
 0. Clone this repo & cd in the repo folder
-1. Download the driver source code from the Realtek website  (Google or see link [4])
-2. Unpack and apply the patch: ``$ patch -i patch_linux_4.4.0.diff``
-3. Compile and install: ``$ make && sudo make install && sudo depmod -a``
+1. Compile and install: ``$ make && sudo make install && sudo depmod -a``
 4. Try it. See link [2]
 5. Blacklist the default driver. In my case:
 ```
