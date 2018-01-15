@@ -1,0 +1,195 @@
+diff -ur rts5229/Makefile rts5229_new/Makefile
+--- rts5229/Makefile	2012-03-21 02:40:18.000000000 +0100
++++ rts5229_new/Makefile	2016-01-21 21:15:17.173225848 +0100
+@@ -22,7 +22,7 @@
+ # Makefile for the PCI-Express Card Reader drivers.
+ #
+ 
+-TARGET_MODULE := rts5229
++TARGET_MODULE := rts5227
+ 
+ EXTRA_CFLAGS := -Idrivers/scsi 
+ 
+diff -ur rts5229/rtsx.c rts5229_new/rtsx.c
+--- rts5229/rtsx.c	2012-03-21 02:40:18.000000000 +0100
++++ rts5229_new/rtsx.c	2016-01-21 21:25:56.906856635 +0100
+@@ -143,9 +143,9 @@
+ 
+ 	
+ 	SPRINTF("       Vendor: Realtek Corp.\n");
+-	SPRINTF("      Product: RTS5229\n");
++	SPRINTF("      Product: RTS5227\n");
+ 	SPRINTF("      Version: %s\n", DRIVER_VERSION);
+-	SPRINTF("        Build: %s, %s\n", __DATE__, __TIME__);
++	//SPRINTF("        Build: %s, %s\n", __DATE__, __TIME__);
+ 
+ 	/*
+ 	 * Calculate start of next buffer, and return value.
+@@ -263,7 +263,7 @@
+ 	
+ 	.name =				CR_DRIVER_NAME,
+ 	.proc_name =			CR_DRIVER_NAME,
+-	.proc_info =			proc_info,
++	//.proc_info =			proc_info,
+ 	.info =				host_info,
+ 
+ 	
+@@ -518,14 +518,14 @@
+ 		 * the maximum known LUN
+ 		 */
+ 		else if (chip->srb->device->id) {
+-			printk(KERN_ERR "Bad target number (%d:%d)\n",
+-				  chip->srb->device->id, chip->srb->device->lun);
++			//printk(KERN_ERR "Bad target number (%d:%d)\n",
++			//	  chip->srb->device->id, chip->srb->device->lun);
+ 			chip->srb->result = DID_BAD_TARGET << 16;
+ 		}
+ 
+ 		else if (chip->srb->device->lun > chip->max_lun) {
+-			printk(KERN_ERR "Bad LUN (%d:%d)\n",
+-				  chip->srb->device->id, chip->srb->device->lun);
++			//printk(KERN_ERR "Bad LUN (%d:%d)\n",
++			//	  chip->srb->device->id, chip->srb->device->lun);
+ 			chip->srb->result = DID_BAD_TARGET << 16;
+ 		}
+ 
+@@ -911,14 +911,14 @@
+ 	chip->support_mmc = 1;
+ }
+ 
+-static int __devinit rtsx_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
++static int  rtsx_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
+ {
+ 	struct Scsi_Host *host;
+ 	struct rtsx_dev *dev;
+ 	int err = 0;
+ 	struct task_struct *th;
+ 
+-	printk(KERN_INFO "--- %s, %s ---\n", __DATE__, __TIME__);
++	//printk(KERN_INFO "--- %s, %s ---\n", __DATE__, __TIME__);
+ 
+ 	err = pci_enable_device(pci);
+ 	if (err < 0) {
+@@ -1066,7 +1066,7 @@
+ }
+ 
+ 
+-static void __devexit rtsx_remove(struct pci_dev *pci)
++static void  rtsx_remove(struct pci_dev *pci)
+ {
+ 	struct rtsx_dev *dev = (struct rtsx_dev *)pci_get_drvdata(pci);
+ 
+@@ -1092,7 +1092,7 @@
+ 	.name = CR_DRIVER_NAME,
+ 	.id_table = rts5229_ids,
+ 	.probe = rtsx_probe,
+-	.remove = __devexit_p(rtsx_remove),
++	.remove = rtsx_remove,
+ #ifdef CONFIG_PM
+ 	.suspend = rtsx_suspend,
+ 	.resume = rtsx_resume,
+diff -ur rts5229/rtsx.h rts5229_new/rtsx.h
+--- rts5229/rtsx.h	2012-03-21 02:40:18.000000000 +0100
++++ rts5229_new/rtsx.h	2016-01-21 21:16:02.249053489 +0100
+@@ -40,6 +40,7 @@
+ #include <linux/workqueue.h>
+ #include <linux/timer.h>
+ #include <linux/time.h>
++#include <linux/vmalloc.h>
+ 
+ #include <scsi/scsi.h>
+ #include <scsi/scsi_cmnd.h>
+@@ -52,7 +53,7 @@
+ #include "trace.h"
+ #include "general.h"
+ 
+-#define CR_DRIVER_NAME		"rts5229"
++#define CR_DRIVER_NAME		"rts5227"
+ 
+ 
+ #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 14)
+
+--- rts5229/rtsx.c	2017-12-28 12:35:28.408051820 +0100
++++ rts5229_new/rtsx.c	2018-01-15 13:37:55.662506670 +0100
+@@ -1080,8 +1080,8 @@
+ 
+ 
+ static struct pci_device_id rts5229_ids[] = {
+-	{ 0x10EC, 0x5229, PCI_ANY_ID, PCI_ANY_ID, PCI_CLASS_OTHERS << 16, 0xFF0000 },
+-	{ 0x10EC, 0x5227, PCI_ANY_ID, PCI_ANY_ID, PCI_CLASS_OTHERS << 16, 0xFF0000 },
++	{ PCI_DEVICE(0x10EC, 0x5229), PCI_CLASS_OTHERS << 16, 0xFF0000 },
++	{ PCI_DEVICE(0x10EC, 0x5227), PCI_CLASS_OTHERS << 16, 0xFF0000 },
+ 	{ 0, },
+ };
+ 
+diff --git a/rtsx_scsi.c b/rtsx_scsi.c
+index feb46ad..73eb7c8 100644
+--- rts5229/rtsx_scsi.c
++++ rts5229_new/rtsx_scsi.c
+@@ -354,17 +354,18 @@ static int inquiry(struct scsi_cmnd *srb, struct rtsx_chip *chip)
+ 			sendbytes = 36;
+ 		}
+ 	}
+-
+ 	if (sendbytes > 8) {
+ 		memcpy(buf, inquiry_buf, 8);
+-		memcpy(buf + 8, inquiry_string,	sendbytes - 8);
+-		if (pro_formatter_flag) {
+-			buf[4] = 0x33;		
+-		}
++		if(sendbytes - 8 <= strlen(inquiry_string))
++			memcpy(buf + 8, inquiry_string, sendbytes - 8);
++		else
++			memcpy(buf + 8, inquiry_string, strlen(inquiry_string));
++		if (pro_formatter_flag)
++			buf[4] = 0x33;	/* Additional Length */
+ 	} else {
+ 		memcpy(buf, inquiry_buf, sendbytes);
+ 	}
+-
++	
+ 	if (pro_formatter_flag) {
+ 		if (sendbytes > 36) {
+ 			memcpy(buf + 36, formatter_inquiry_str, sendbytes - 36);
+
+--- rts5229/Makefile	2017-06-22 14:42:38.212148541 +0200
++++ rts5229_new/Makefile	2017-06-22 14:57:15.115095874 +0200
+@@ -1,6 +1,6 @@
+ # Driver for Realtek PCI-Express card reader
+ #
+-# Copyright(c) 2009 Realtek Semiconductor Corp. All rights reserved.  
++# Copyright(c) 2009 Realtek Semiconductor Corp. All rights reserved.
+ #
+ # This program is free software; you can redistribute it and/or modify it
+ # under the terms of the GNU General Public License as published by the
+@@ -22,9 +22,11 @@
+ # Makefile for the PCI-Express Card Reader drivers.
+ #
+ 
++KVERSION := $(shell uname -r)
++
+ TARGET_MODULE := rts5227
+ 
+-EXTRA_CFLAGS := -Idrivers/scsi 
++EXTRA_CFLAGS := -Idrivers/scsi
+ 
+ obj-m += $(TARGET_MODULE).o
+ 
+@@ -33,14 +35,12 @@
+ 
+ default:
+ 	cp -f ./define.release ./define.h
+-	make -C /lib/modules/$(shell uname -r)/build/ SUBDIRS=$(PWD) modules
++	make -C /lib/modules/$(KVERSION)/build/ SUBDIRS=$(PWD) modules
+ debug:
+ 	cp -f ./define.debug ./define.h
+-	make -C /lib/modules/$(shell uname -r)/build/ SUBDIRS=$(PWD) modules
++	make -C /lib/modules/$(KVERSION)/build/ SUBDIRS=$(PWD) modules
+ install:
+-	cp $(TARGET_MODULE).ko /lib/modules/$(shell uname -r)/kernel/drivers/scsi -f
++	cp $(TARGET_MODULE).ko /lib/modules/$(KVERSION)/kernel/drivers/scsi -f
+ clean:
+ 	rm -f *.o *.ko
+ 	rm -f $(TARGET_MODULE).mod.c
+-
+-
