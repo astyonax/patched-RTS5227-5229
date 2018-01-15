@@ -55,13 +55,13 @@ I tested the compilation on:
 
 0. Clone this repo & cd in the repo folder
 1. Compile and install: ``$ make && sudo make install && sudo depmod -a``
-4. Try it. See link [2]
-5. Blacklist the default driver. In my case:
+2. Try it. See link [2]
+3. Blacklist the default driver. In my case:
 ```
 # echo 'blacklist rtsx_pci' >> /etc/modprobe.d/blacklist.conf
 # update-initramfs -u
 ```
-6. Unload the module before suspend
+4. Unload the module before suspend
 ```
 echo SUSPEND_MODULES="rts5227" | sudo tee -a /etc/pm/config.d/modules
 ```
