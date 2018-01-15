@@ -108,3 +108,17 @@ diff -ur rts5229/rtsx.h rts5229_new/rtsx.h
  
  
  #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 14)
+
+--- rts5229/rtsx.c	2017-12-28 12:35:28.408051820 +0100
++++ rts5229_new/rtsx.c	2018-01-15 13:37:55.662506670 +0100
+@@ -1080,8 +1080,8 @@
+ 
+ 
+ static struct pci_device_id rts5229_ids[] = {
+-	{ 0x10EC, 0x5229, PCI_ANY_ID, PCI_ANY_ID, PCI_CLASS_OTHERS << 16, 0xFF0000 },
+-	{ 0x10EC, 0x5227, PCI_ANY_ID, PCI_ANY_ID, PCI_CLASS_OTHERS << 16, 0xFF0000 },
++	{ PCI_DEVICE(0x10EC, 0x5229), PCI_CLASS_OTHERS << 16, 0xFF0000 },
++	{ PCI_DEVICE(0x10EC, 0x5227), PCI_CLASS_OTHERS << 16, 0xFF0000 },
+ 	{ 0, },
+ };
+ 
