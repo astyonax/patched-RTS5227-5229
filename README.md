@@ -27,6 +27,7 @@ Not all cards trigger this error, but one of mine does (HAMA SDHC 16GB, class 10
 
 I tested the compilation on:
 
+* Linux 4.15.0 
 * Linux 4.14.0 
 * Linux 4.12.0 
 * Linux 4.10.2
