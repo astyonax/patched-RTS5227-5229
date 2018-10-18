@@ -23,6 +23,9 @@ $dmesg
 Often, some SD cards do not work with the default driver (in my case ``rtsx_pci``).
 Not all cards trigger this error, but one of mine does (HAMA SDHC 16GB, class 10).
 
+Changes to original repository by astyonax:
+- Added DKMS support
+
 ## Patched driver
 
 I tested the compilation on:
@@ -46,20 +49,23 @@ I tested the compilation on:
 
 ## Usage
 
-### Manual
+### Manual (updated by Stane1983)
 
-0. Clone this repo & cd in the repo folder
-1. Compile and install: ``$ make && sudo make install && sudo depmod -a``
-2. Try it. See link [2]
-3. Blacklist the default driver. In my case:
+1. Clone this repo & cd in the repo folder
+2. Add rtsx_pci to blacklisted modules as follows:
 ```
-# echo 'blacklist rtsx_pci' >> /etc/modprobe.d/blacklist.conf
-# update-initramfs -u
+echo 'blacklist rtsx_pci' >> /etc/modprobe.d/blacklist.conf
+```
+3. compile and install driver using DKMS:
+```
+sudo dkms add ./rts5229
+sudo dkms install rts5227/1.07
 ```
 4. Unload the module before suspend
 ```
 echo SUSPEND_MODULES="rts5227" | sudo tee -a /etc/pm/config.d/modules
 ```
+5. Reboot your machine
 
 ## Relevant websites
 Some changes to the code are peculiar of ``Linux 4.4``, but many others were already reported:
